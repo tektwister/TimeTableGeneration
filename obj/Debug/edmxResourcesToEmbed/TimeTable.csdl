@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TimeTableModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Class">
+    <Key>
+      <PropertyRef Name="ClassId" />
+    </Key>
+    <Property Name="ClassId" Type="Int32" Nullable="false" />
+    <Property Name="ClassName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Venue" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="TimeTables" Relationship="Self.FK_TimeTable_Class" FromRole="Class" ToRole="TimeTable" />
+  </EntityType>
+  <EntityType Name="Course">
+    <Key>
+      <PropertyRef Name="CourseCode" />
+    </Key>
+    <Property Name="CourseCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="CourseName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="TimeTables" Relationship="Self.FK_TimeTable_Course" FromRole="Course" ToRole="TimeTable" />
+  </EntityType>
+  <EntityType Name="Staff">
+    <Key>
+      <PropertyRef Name="StaffId" />
+    </Key>
+    <Property Name="StaffId" Type="Int32" Nullable="false" />
+    <Property Name="StaffName" Type="String" MaxLength="40" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="TimeTables" Relationship="Self.FK_TimeTable_Staff" FromRole="Staff" ToRole="TimeTable" />
+  </EntityType>
+  <EntityType Name="TimeTable">
+    <Key>
+      <PropertyRef Name="PeriodEntryId" />
+    </Key>
+    <Property Name="PeriodEntryId" Type="Int32" Nullable="false" />
+    <Property Name="ClassId" Type="Int32" />
+    <Property Name="CourseCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="StaffId" Type="Int32" />
+    <Property Name="PeriodNumber" Type="Int32" />
+    <Property Name="Day" Type="Int32" />
+    <NavigationProperty Name="Class" Relationship="Self.FK_TimeTable_Class" FromRole="TimeTable" ToRole="Class" />
+    <NavigationProperty Name="Course" Relationship="Self.FK_TimeTable_Course" FromRole="TimeTable" ToRole="Course" />
+    <NavigationProperty Name="Staff" Relationship="Self.FK_TimeTable_Staff" FromRole="TimeTable" ToRole="Staff" />
+  </EntityType>
+  <Association Name="FK_TimeTable_Class">
+    <End Role="Class" Type="Self.Class" Multiplicity="0..1" />
+    <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Class">
+        <PropertyRef Name="ClassId" />
+      </Principal>
+      <Dependent Role="TimeTable">
+        <PropertyRef Name="ClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TimeTable_Course">
+    <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+    <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="CourseCode" />
+      </Principal>
+      <Dependent Role="TimeTable">
+        <PropertyRef Name="CourseCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TimeTable_Staff">
+    <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+    <End Role="TimeTable" Type="Self.TimeTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staff">
+        <PropertyRef Name="StaffId" />
+      </Principal>
+      <Dependent Role="TimeTable">
+        <PropertyRef Name="StaffId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TimeTableEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Classes" EntityType="Self.Class" />
+    <EntitySet Name="Courses" EntityType="Self.Course" />
+    <EntitySet Name="Staffs" EntityType="Self.Staff" />
+    <EntitySet Name="TimeTables" EntityType="Self.TimeTable" />
+    <AssociationSet Name="FK_TimeTable_Class" Association="Self.FK_TimeTable_Class">
+      <End Role="Class" EntitySet="Classes" />
+      <End Role="TimeTable" EntitySet="TimeTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TimeTable_Course" Association="Self.FK_TimeTable_Course">
+      <End Role="Course" EntitySet="Courses" />
+      <End Role="TimeTable" EntitySet="TimeTables" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TimeTable_Staff" Association="Self.FK_TimeTable_Staff">
+      <End Role="Staff" EntitySet="Staffs" />
+      <End Role="TimeTable" EntitySet="TimeTables" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
