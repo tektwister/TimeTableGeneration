@@ -29,21 +29,16 @@ namespace TimeTable.Controllers
             if (ModelState.IsValid) //checking model is valid or not
             {
                 ClassDataAccess objDB = new ClassDataAccess();
-                //Console.WriteLine(c.ClassId.ToString());
-                ModelState.AddModelError("",c.ClassId.ToString());
                 string result = objDB.insertClass(c);
                 ViewData["result"] = result;
-                //ModelState.Clear(); //clearing model
+                ModelState.Clear(); //clearing model
                 return View();
             }
             else
             {
                 ModelState.AddModelError("", "Error in saving data");
                 return View();
+            }
         }
-
     }
-
-
-}
 }

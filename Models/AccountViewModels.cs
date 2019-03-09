@@ -64,6 +64,7 @@ namespace TimeTable.Models
 
     public class RegisterViewModel
     {
+        [Key]
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

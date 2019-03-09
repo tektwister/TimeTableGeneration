@@ -29,5 +29,11 @@ namespace TimeTable.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<TimeTable.Models.Class> Classes { get; set; }
+
+        public System.Data.Entity.DbSet<TimeTable.Models.user> users { get; set; }
+
+        public System.Data.Entity.DbSet<TimeTable.Models.RegisterViewModel> RegisterViewModels { get; set; }
     }
 }
