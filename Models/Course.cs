@@ -13,6 +13,5 @@ namespace TimeTable.Models
 
         [Required(ErrorMessage = "Enter Course Name")]
         public string CourseName { get; set; }
-
     }
 }
